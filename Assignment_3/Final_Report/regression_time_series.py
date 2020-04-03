@@ -14,7 +14,6 @@ from keras.callbacks import EarlyStopping
 from keras.optimizers import Adam
 from sklearn.linear_model import LinearRegression
 
-
 dir_path = sys.argv[1]
 
 headers = ['Date', 'Time', 'Global_active_power', 'Global_reactive_power',
@@ -149,39 +148,15 @@ y_validate = validate.values[:, -1]
 X_test = test.values[:, :-1]
 y_test = test.values[:, -1]
 
-print(X_train[0])
-print("Here")
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_validate = scaler.transform(X_validate)
 X_test = scaler.transform(X_test)
-print('Here 2')
-
-
-# print("Model Construction")
-# model = Sequential()
-# model.add(Dense(100, activation='relu', input_shape=(X_train.shape[1], )))
-# model.add(Dropout(0.2))
-# model.add(Dense(1))
-# print("Model Construction done")
-
-# model.compile(loss='mean_squared_error',
-#               optimizer=Adam(lr=0.001))
-# print("Model Fitting")
-# history = model.fit(X_train, y_train,batch_size=1024,epochs=100,
-#                     verbose=1,
-#                     validation_data=(X_validate, y_validate),
-#                     callbacks=[EarlyStopping(patience=1)])
-# print("Model Fitting done")
-
-# predictions = model.predict(X_validate)
-# print("Predictions = ",len(predictions))
-# print("Mean Sqaured Error",mean_squared_error(predictions, y_validate))
-# rms = sqrt(mean_squared_error(y_validate, predictions))
-# print("Root Mean Square",rms)
 
 model = LinearRegression()
 model.fit(X_train, y_train)
-predictions = model.predict(X_validate)
+predictions = model.predict(X_test)
+
+#Predictions on standard output
 for i in predictions:
     print(i)
